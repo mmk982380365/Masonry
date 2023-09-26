@@ -18,44 +18,44 @@ id _EXPObjectify(const char *type, ...) {
   va_list v;
   va_start(v, type);
   id obj = nil;
-  if(strcmp(type, @encode(char)) == 0) {
+  if(strncmp(type, @encode(char), 1000) == 0) {
     char actual = (char)va_arg(v, int);
     obj = @(actual);
-  } else if(strcmp(type, @encode(_Bool)) == 0) {
+  } else if(strncmp(type, @encode(_Bool), 1000) == 0) {
     _Static_assert(sizeof(_Bool) <= sizeof(int), "Expected _Bool to be subject to vararg type promotion");
     _Bool actual = (_Bool)va_arg(v, int);
     obj = @(actual);
-  } else if(strcmp(type, @encode(double)) == 0) {
+  } else if(strncmp(type, @encode(double), 1000) == 0) {
     double actual = (double)va_arg(v, double);
     obj = @(actual);
-  } else if(strcmp(type, @encode(float)) == 0) {
+  } else if(strncmp(type, @encode(float), 1000) == 0) {
     float actual = (float)va_arg(v, double);
     obj = @(actual);
-  } else if(strcmp(type, @encode(int)) == 0) {
+  } else if(strncmp(type, @encode(int), 1000) == 0) {
     int actual = (int)va_arg(v, int);
     obj = @(actual);
-  } else if(strcmp(type, @encode(long)) == 0) {
+  } else if(strncmp(type, @encode(long), 1000) == 0) {
     long actual = (long)va_arg(v, long);
     obj = @(actual);
-  } else if(strcmp(type, @encode(long long)) == 0) {
+  } else if(strncmp(type, @encode(long long), 1000) == 0) {
     long long actual = (long long)va_arg(v, long long);
     obj = @(actual);
-  } else if(strcmp(type, @encode(short)) == 0) {
+  } else if(strncmp(type, @encode(short), 1000) == 0) {
     short actual = (short)va_arg(v, int);
     obj = @(actual);
-  } else if(strcmp(type, @encode(unsigned char)) == 0) {
+  } else if(strncmp(type, @encode(unsigned char), 1000) == 0) {
     unsigned char actual = (unsigned char)va_arg(v, unsigned int);
     obj = @(actual);
-  } else if(strcmp(type, @encode(unsigned int)) == 0) {
+  } else if(strncmp(type, @encode(unsigned int), 1000) == 0) {
     unsigned int actual = (int)va_arg(v, unsigned int);
     obj = @(actual);
-  } else if(strcmp(type, @encode(unsigned long)) == 0) {
+  } else if(strncmp(type, @encode(unsigned long), 1000) == 0) {
     unsigned long actual = (unsigned long)va_arg(v, unsigned long);
     obj = @(actual);
-  } else if(strcmp(type, @encode(unsigned long long)) == 0) {
+  } else if(strncmp(type, @encode(unsigned long long), 1000) == 0) {
     unsigned long long actual = (unsigned long long)va_arg(v, unsigned long long);
     obj = @(actual);
-  } else if(strcmp(type, @encode(unsigned short)) == 0) {
+  } else if(strncmp(type, @encode(unsigned short), 1000) == 0) {
     unsigned short actual = (unsigned short)va_arg(v, unsigned int);
     obj = @(actual);
   } else if(strstr(type, @encode(EXPBasicBlock)) != NULL) {
@@ -67,7 +67,7 @@ id _EXPObjectify(const char *type, ...) {
   } else if((strstr(type, @encode(id)) != NULL) || (strstr(type, @encode(Class)) != 0)) {
     id actual = va_arg(v, id);
     obj = actual;
-  } else if(strcmp(type, @encode(__typeof__(nil))) == 0) {
+  } else if(strncmp(type, @encode(__typeof__(nil)), 1000) == 0) {
     obj = nil;
   } else if(strstr(type, "ff}{") != NULL) { //TODO: of course this only works for a 2x2 e.g. CGRect
     obj = [[[EXPFloatTuple alloc] initWithFloatValues:(float *)va_arg(v, float[4]) size:4] autorelease];
@@ -123,9 +123,9 @@ NSString *EXPDescribeObject(id obj) {
   } else if([obj isKindOfClass:[NSValue class]] && ![obj isKindOfClass:[NSNumber class]]) {
     const char *type = [(NSValue *)obj _EXP_objCType];
     if(type) {
-      if(strcmp(type, @encode(SEL)) == 0) {
+      if(strncmp(type, @encode(SEL), 1000) == 0) {
         return [NSString stringWithFormat:@"@selector(%@)", NSStringFromSelector([obj pointerValue])];
-      } else if(strcmp(type, @encode(Class)) == 0) {
+      } else if(strncmp(type, @encode(Class), 1000) == 0) {
         return NSStringFromClass([obj pointerValue]);
       }
     }

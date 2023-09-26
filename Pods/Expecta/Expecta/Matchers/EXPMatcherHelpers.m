@@ -5,5 +5,5 @@ BOOL EXPIsValuePointer(NSValue *value) {
 }
 
 BOOL EXPIsNumberFloat(NSNumber *number) {
-  return strcmp([number objCType], @encode(float)) == 0;
+  return strncmp([number objCType], @encode(float), 1000) == 0;
 }

@@ -138,15 +138,15 @@
 - (void)setLayoutConstantWithValue:(NSValue *)value {
     if ([value isKindOfClass:NSNumber.class]) {
         self.offset = [(NSNumber *)value doubleValue];
-    } else if (strcmp(value.objCType, @encode(CGPoint)) == 0) {
+    } else if (strncmp(value.objCType, @encode(CGPoint), 1000) == 0) {
         CGPoint point;
         [value getValue:&point];
         self.centerOffset = point;
-    } else if (strcmp(value.objCType, @encode(CGSize)) == 0) {
+    } else if (strncmp(value.objCType, @encode(CGSize), 1000) == 0) {
         CGSize size;
         [value getValue:&size];
         self.sizeOffset = size;
-    } else if (strcmp(value.objCType, @encode(MASEdgeInsets)) == 0) {
+    } else if (strncmp(value.objCType, @encode(MASEdgeInsets), 1000) == 0) {
         MASEdgeInsets insets;
         [value getValue:&insets];
         self.insets = insets;
